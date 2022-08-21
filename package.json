@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "start": "npm run migrate && tsc && node dist/src/server.js",
+    "build": "tsc",
+    "tsc": "tsc",
+    "start": "npm run migrate && node dist/src/server.js",
     "dev": "nodemon src/server.ts",
     "migrate": "npx prisma generate && npx prisma migrate dev --name init",
     "test": "jest",

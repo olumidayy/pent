@@ -6,6 +6,7 @@
     "lib": ["esnext"],
     "esModuleInterop": true,
     "target": "ES2018",
+    "module": "CommonJS",
     "moduleResolution": "node"
   }
 }

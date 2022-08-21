@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
+    "start": "tsc && node dist/src/server.js",
     "dev": "nodemon src/server.ts",
     "test": "jest",
     "eslint": "eslint 'src/**/*.ts'",

@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { VerifyOptions, verify } from 'jsonwebtoken';
+import { verify } from 'jsonwebtoken';
 import Logger from '../../common/logger';
 import { ApiError } from '../../common';
 import config from '../../config';

@@ -52,8 +52,8 @@ class ApartmentService implements BaseService<Apartment> {
       where: { id },
       include: {
         reviews: {
-          include: { rating: true }
-        }
+          include: { rating: true },
+        },
       },
     });
     if (!apartment) {
@@ -77,10 +77,10 @@ class ApartmentService implements BaseService<Apartment> {
    */
   public async delete(id: number): Promise<void> {
     const apartment = await this.prisma.apartment.findUnique({
-      where: { id }
+      where: { id },
     });
     if (!apartment) {
-      throw new ApiError({ message: "Apartment not found.", code: 404 });
+      throw new ApiError({ message: 'Apartment not found.', code: 404 });
     }
     await this.prisma.apartment.delete({
       where: { id },

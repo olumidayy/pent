@@ -1,4 +1,4 @@
-import { PrismaClient, User } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 import { ApiError } from '../../common';
 import prisma from '../../common/client';
 
@@ -16,7 +16,9 @@ class UserService {
    */
   public async getAll(): Promise<any[]> {
     const users = this.prisma.user.findMany({
-      select: { firstname: true, lastname: true, email: true, id: true }
+      select: {
+        firstname: true, lastname: true, email: true, id: true,
+      },
     });
     return users;
   }
@@ -29,7 +31,9 @@ class UserService {
   public async getById(id: number): Promise<any> {
     const user = await this.prisma.user.findUnique({
       where: { id },
-      select: { firstname: true, lastname: true, email: true, id: true }
+      select: {
+        firstname: true, lastname: true, email: true, id: true,
+      },
     });
     if (!user) {
       throw new ApiError({ message: 'User not found.', code: 404 });
@@ -44,11 +48,11 @@ class UserService {
    */
   public async delete(id: number): Promise<void> {
     const user = await this.prisma.user.findUnique({
-      where: { id }
+      where: { id },
     });
 
     if (!user) {
-      throw new ApiError({ message: "User not found.", code: 404 });
+      throw new ApiError({ message: 'User not found.', code: 404 });
     }
     await this.prisma.user.delete({
       where: { id },

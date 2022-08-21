@@ -1,6 +1,6 @@
 import { celebrate, Joi } from 'celebrate';
 
-export const CreateApartment =  celebrate(
+export const CreateApartment = celebrate(
   {
     body: {
       description: Joi.string().required(),

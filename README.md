@@ -1,4 +1,1 @@
-# tuteria
-# tuteria
-# pent
 # pent

@@ -15,7 +15,7 @@ export default {
 
   saltRounds: process.env.SAlT_ROUNDS || 10,
 
-  jwt_passphrase: process.env.JWT_PASSPHRASE || '',
+  jwtSecret: process.env.JWT_SECRET || '',
 
   logs: {
     level: 'silly',

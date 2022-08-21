@@ -16,7 +16,7 @@ class ReviewService implements BaseService<Review> {
    * @returns new review.
    */
   public async create(data: NewReview): Promise<Review> {
-    const overallRating = Math.floor(data.landlord + data.environment + data.quality / 3);
+    const overallRating = Math.floor((data.landlord + data.environment + data.quality) / 3);
     const review = await this.prisma.review.create({
       data: {
         description: data.description,
@@ -57,6 +57,7 @@ class ReviewService implements BaseService<Review> {
   public async getById(id: number): Promise<Review> {
     const review = await this.prisma.review.findUnique({
       where: { id },
+      include: { rating: true },
     });
     if (!review) {
       throw new ApiError({ message: 'Review not found.', code: 404 });
@@ -83,6 +84,12 @@ class ReviewService implements BaseService<Review> {
    * @returns a review or null.
    */
   public async vote(id: number): Promise<Review> {
+    const r = await this.prisma.review.findUnique({
+      where: { id },
+    });
+    if (!r) {
+      throw new ApiError({ message: "Review not found.", code: 404 });
+    }
     const review = await this.prisma.review.update({
       where: { id },
       data: {
@@ -98,9 +105,19 @@ class ReviewService implements BaseService<Review> {
    * @returns
    */
   public async delete(id: number): Promise<void> {
+    const review = await this.prisma.review.findUnique({
+      where: { id }
+    });
+    if (!review) {
+      throw new ApiError({ message: "Review not found.", code: 404 });
+    }
+    await this.prisma.rating.deleteMany({
+      where: { reviewId: id }
+    });
     await this.prisma.review.delete({
       where: { id },
     });
+    // await Promise.all([ratings, reviews]);
   }
 }
 

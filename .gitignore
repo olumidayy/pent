@@ -2,8 +2,5 @@ node_modules/
 dist/
 .env
 
-public.pem
-private.pem
-
 migrations/
 dev.db

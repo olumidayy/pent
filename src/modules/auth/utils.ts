@@ -1,20 +1,13 @@
 import { NextFunction, Request, Response } from 'express';
-import path from 'path';
-import fs from 'fs';
 import { VerifyOptions, verify } from 'jsonwebtoken';
 import Logger from '../../common/logger';
 import { ApiError } from '../../common';
+import config from '../../config';
 
 async function validateToken(token: string): Promise<any> {
-  const publicKey = fs.readFileSync(path.join(__dirname, './../../../public.pem'));
-
-  const verifyOptions: VerifyOptions = {
-    algorithms: ['RS256'],
-  };
-
   return new Promise((resolve, reject) => {
     // eslint-disable-next-line consistent-return
-    verify(token, publicKey, verifyOptions, (error, decoded) => {
+    verify(token, config.jwtSecret, (error, decoded) => {
       if (error) return reject(error);
 
       resolve(decoded);

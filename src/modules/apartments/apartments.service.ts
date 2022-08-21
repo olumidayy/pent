@@ -34,6 +34,7 @@ class ApartmentService implements BaseService<Apartment> {
   public async getById(id: number): Promise<Apartment> {
     const apartment = await this.prisma.apartment.findUnique({
       where: { id },
+      include: { reviews: true },
     });
     if (!apartment) {
       throw new ApiError({ message: 'Apartment not found.', code: 404 });
@@ -49,7 +50,11 @@ class ApartmentService implements BaseService<Apartment> {
   public async getReviews(id: number): Promise<Apartment> {
     const apartment = await this.prisma.apartment.findUnique({
       where: { id },
-      include: { reviews: true },
+      include: {
+        reviews: {
+          include: { rating: true }
+        }
+      },
     });
     if (!apartment) {
       throw new ApiError({ message: 'Apartment not found.', code: 404 });
@@ -71,6 +76,12 @@ class ApartmentService implements BaseService<Apartment> {
    * @returns
    */
   public async delete(id: number): Promise<void> {
+    const apartment = await this.prisma.apartment.findUnique({
+      where: { id }
+    });
+    if (!apartment) {
+      throw new ApiError({ message: "Apartment not found.", code: 404 });
+    }
     await this.prisma.apartment.delete({
       where: { id },
     });

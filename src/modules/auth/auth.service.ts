@@ -1,8 +1,6 @@
 import * as bcrypt from 'bcrypt';
 import { Prisma, PrismaClient } from '@prisma/client';
 import { sign, SignOptions } from 'jsonwebtoken';
-import * as fs from 'fs';
-import * as path from 'path';
 import { LoginDTO } from './auth.interfaces';
 import { ApiError } from '../../common';
 import config from '../../config';
@@ -64,17 +62,11 @@ class AuthService {
    * @returns - a token
    */
   private static tokenize(payload: any) {
-    const privateKey = {
-      key: fs.readFileSync(path.join(__dirname, '../../../private.pem'), 'utf-8'),
-      passphrase: config.jwt_passphrase,
-    };
-
     const signInOptions: SignOptions = {
-      algorithm: 'RS256',
       expiresIn: '2h',
     };
 
-    return sign(payload, privateKey, signInOptions);
+    return sign(payload, config.jwtSecret, signInOptions);
   }
 }
 

@@ -20,6 +20,10 @@ export default ({ app }: { app: express.Application }) => {
     }));
   });
 
+  app.get('/', (req, res) => {
+    res.redirect('/api');
+  });
+
   // For handling 404 errors.
   app.use((req, res, next) => {
     const err = new ApiError({ message: 'That resource does not exist on this server.' });

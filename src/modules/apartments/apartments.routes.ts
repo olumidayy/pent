@@ -3,7 +3,7 @@ import express from 'express';
 import ApartmentService from './apartments.service';
 import { ApiResponse } from '../../common';
 import Logger from '../../common/logger';
-import ApartmentsValidator from './apartments.validators';
+import { CreateApartment, UpdateApartment } from './apartments.validators';
 
 const apartmentsRouter = express.Router();
 
@@ -12,7 +12,7 @@ export default (app: express.Router) => {
 
   apartmentsRouter.post(
     '/',
-    ApartmentsValidator,
+    CreateApartment,
     async (req, res, next) => {
       try {
         Logger.info(`Apartments route was called to create new apartment: ${req.body}.`);
@@ -84,7 +84,7 @@ export default (app: express.Router) => {
 
   apartmentsRouter.patch(
     '/:id',
-    ApartmentsValidator,
+    UpdateApartment,
     async (req, res, next) => {
       try {
         Logger.info(`Apartments route was called to update apartment: ${req.body}.`);
@@ -95,7 +95,7 @@ export default (app: express.Router) => {
         res.status(200).json(
           new ApiResponse({
             success: true,
-            message: 'Apartment created.',
+            message: 'Apartment updated.',
             code: 200,
             data: apartment,
           }),

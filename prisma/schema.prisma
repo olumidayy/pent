@@ -1,0 +1,55 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DB_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  firstname String
+  lastname  String
+  password  String
+  reviews   Review[]
+}
+
+model Apartment {
+  id          Int      @id @default(autoincrement())
+  description String
+  location    String
+  reviews     Review[]
+}
+
+model Review {
+  id          Int       @id @default(autoincrement())
+  description String
+  createdAt   DateTime  @default(now())
+  userId      Int
+  user        User      @relation(fields: [userId], references: [id])
+  apartmentId Int
+  apartment   Apartment @relation(fields: [apartmentId], references: [id])
+  media       Media[]
+  rating      Rating?
+  votes       Int
+}
+
+model Media {
+  id       Int    @id @default(autoincrement())
+  url      String
+  review   Review @relation(fields: [reviewId], references: [id])
+  reviewId Int
+}
+
+model Rating {
+  id          Int    @id @default(autoincrement())
+  Review      Review @relation(fields: [reviewId], references: [id])
+  reviewId    Int    @unique
+  landlord    Int
+  environment Int
+  quality     Int
+  overall     Int
+}

@@ -9,6 +9,7 @@ export const NewReviewValidator = celebrate(
       landlord: Joi.number().min(1).max(5).required(),
       environment: Joi.number().min(1).max(5).required(),
       quality: Joi.number().min(1).max(5).required(),
+      media: Joi.array().items(Joi.string()),
     },
   },
   { stripUnknown: true },

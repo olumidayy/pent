@@ -14,8 +14,10 @@ export default {
 
   jwtSecret: process.env.JWT_SECRET || '',
 
+  nodeEnv: process.env.NODE_ENV,
+
   logs: {
-    level: 'silly',
+    level: 'info',
   },
 
   api: {

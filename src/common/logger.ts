@@ -12,6 +12,10 @@ if (process.env.NODE_ENV !== 'development') {
   );
 }
 
+const format = winston.format.printf(({
+  timestamp, level, message, meta,
+}) => `${timestamp};${level};${message};${meta ? JSON.stringify(meta) : ''}`);
+
 const Logger = winston.createLogger({
   level: config.logs.level,
   levels: winston.config.npm.levels,
@@ -21,7 +25,7 @@ const Logger = winston.createLogger({
     }),
     winston.format.errors({ stack: true }),
     winston.format.splat(),
-    winston.format.json(),
+    format,
   ),
   transports,
 });

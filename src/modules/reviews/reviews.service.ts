@@ -57,7 +57,7 @@ class ReviewService implements BaseService<Review> {
   public async getById(id: number): Promise<Review> {
     const review = await this.prisma.review.findUnique({
       where: { id },
-      include: { rating: true },
+      include: { rating: true, media: true },
     });
     if (!review) {
       throw new ApiError({ message: 'Review not found.', code: 404 });

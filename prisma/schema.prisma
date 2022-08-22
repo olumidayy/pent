@@ -48,8 +48,12 @@ model Rating {
   id          Int    @id @default(autoincrement())
   Review      Review @relation(fields: [reviewId], references: [id])
   reviewId    Int    @unique
+  // Landlord rating.
   landlord    Int
+  // Environment rating.
   environment Int
+  // Environment rating.
   quality     Int
+  // Overall rating.
   overall     Int
 }

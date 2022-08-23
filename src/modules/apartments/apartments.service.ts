@@ -27,9 +27,9 @@ class ApartmentService implements BaseService<Apartment> {
   }
 
   /**
-   * Fetches one apartment by their ID.
+   * Fetches one apartment by its ID.
    * @param id the apartment ID.
-   * @returns a apartment or null.
+   * @returns an apartment or null.
    */
   public async getById(id: number): Promise<Apartment> {
     const apartment = await this.prisma.apartment.findUnique({
@@ -49,7 +49,7 @@ class ApartmentService implements BaseService<Apartment> {
   /**
    * Fetches the reviews for an apartment.
    * @param id the apartment ID.
-   * @returns a apartment or null.
+   * @returns an apartment or null.
    */
   public async getReviews(id: number): Promise<Apartment> {
     const apartment = await this.prisma.apartment.findUnique({
@@ -65,7 +65,12 @@ class ApartmentService implements BaseService<Apartment> {
     }
     return apartment;
   }
-
+  
+  /**
+   * Updates an apartment.
+   * @param id the apartment ID.
+   * @returns an apartment or null.
+   */
   public async update(id: number, data: Prisma.ApartmentUpdateInput): Promise<Apartment> {
     const apartment = await this.prisma.apartment.update({
       where: { id },
